@@ -47,6 +47,7 @@ namespace F2DE.Minecraft2D
                 var locator = e.GetComponent<Locator>()!;
                 locator.parent = entity.GetComponent<Locator>();
                 locator.position = new Vector2(blockPos.x * 16, blockPos.y * 16);
+                e.GetComponent<BlockState>()!.blockPos = blockPos;
             })).GetComponent<BlockState>()!;
             blockStates[GetIndex(blockPos)] = state;
             return state;

@@ -15,14 +15,11 @@ namespace F2DE.Minecraft2D.Blocks
         {
         }
 
-        public override void SetBoudingBox(BlockState blockState, BoundingBox boundingBox)
+        public override void Update(BlockState blockState, BlockPos blockPos)
         {
-            boundingBox.enabled = false;
-        }
-
-        public override TextureResource? GetTexture(BlockState blockState)
-        {
-            return null;
+            base.Update(blockState, blockPos);
+            blockState.entity.GetComponent<SpriteRenderer>()!.SetTexture(null);
+            blockState.entity.GetComponent<BoundingBox>()!.enabled = false;
         }
     }
 }

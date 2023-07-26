@@ -13,18 +13,11 @@ namespace F2DE.Minecraft2D.Blocks
 {
     internal abstract class AbstractBlock
     {
-        public abstract TextureResource? GetTexture(BlockState blockState);
-
         public Game game;
 
         public AbstractBlock(Game game)
         {
             this.game = game;
-        }
-
-        public virtual void SetBoudingBox(BlockState blockState, BoundingBox boundingBox)
-        {
-            boundingBox.size = new Vector2(16, 16);
         }
 
         public EntityBuilder GetBasePrefab()
@@ -40,6 +33,11 @@ namespace F2DE.Minecraft2D.Blocks
                     state.block = this;
                     state.Update();
                 });
+        }
+
+        public virtual void Update(BlockState blockState, BlockPos blockPos)
+        {
+            blockState.entity.GetComponent<BoundingBox>()!.size = new Vector2(16, 16);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using F2DE.Base;
+using F2DE.Base.Components;
 using F2DE.Base.Registries;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,11 @@ namespace F2DE.Minecraft2D.Blocks
         {
         }
 
-        public override TextureResource? GetTexture(BlockState blockState)
+        public override void Update(BlockState blockState, BlockPos blockPos)
         {
-            return game.registry.GetResource<TextureResource>("texture/block/" + game.registry.GetValue<BlocksRegistry>()!.Get(blockState.block!));
+            base.Update(blockState, blockPos);
+            var texture = game.registry.GetResource<TextureResource>("texture/block/" + game.registry.GetValue<BlocksRegistry>()!.Get(blockState.block!));
+            blockState.entity.GetComponent<SpriteRenderer>()!.SetTexture(texture);
         }
     }
 }
