@@ -21,9 +21,12 @@ namespace F2DE.Base
 
         public void Tick()
         {
-            foreach (var entity in entities)
+            foreach (var entity in new List<Entity>(entities))
             {
-                entity.Tick();
+                if (entities.Contains(entity))
+                {
+                    entity.Tick();
+                }
             }
         }
 

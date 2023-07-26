@@ -65,6 +65,29 @@ namespace F2DE.Minecraft2D
                 gravity += Vector2.up * 1.7f;
             }
             world.position = locator.position * -1 + Vector2.right * (320 / 2) + Vector2.down * (240 / 2);
+
+            if (entity.instance.game.input.GetButton("break"))
+            {
+                var blocks = new List<BlockState>(entity.instance.GetComponents<BlockState>());
+                BlockState? block = null;
+                float distance = 100000;
+                foreach (var b in blocks)
+                {
+                    if (Vector2.Distance(b.entity.GetComponent<Locator>()!.Position, locator.Position) < distance)
+                    {
+                        distance = Vector2.Distance(b.entity.GetComponent<Locator>()!.Position, locator.Position);
+                        block = b;
+                    }
+                }
+                if (block != null)
+                {
+                    block.Break();
+                }
+            }
+            if (locator.position.y > 20 * 16f)
+            {
+                gravity += Vector2.up * 0.2f;
+            }
         }
     }
 }

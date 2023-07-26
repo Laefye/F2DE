@@ -31,5 +31,10 @@ namespace F2DE.Minecraft2D
                 block.Update(this, blockPos);
             }
         }
+
+        public void Break()
+        {
+            entity.instance.Destroy(entity);
+        }
     }
 }
