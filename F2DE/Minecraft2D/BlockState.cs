@@ -14,10 +14,12 @@ namespace F2DE.Minecraft2D
     {
         public AbstractBlock? block;
         private SpriteRenderer renderer;
+        private BoundingBox boundingBox;
 
         public BlockState(Entity entity) : base(entity)
         {
             renderer = entity.GetComponent<SpriteRenderer>()!;
+            boundingBox = entity.GetComponent<BoundingBox>()!;
         }
 
         public void Update()
@@ -26,6 +28,7 @@ namespace F2DE.Minecraft2D
             {
                 var t = block.GetTexture(this);
                 renderer.SetTexture(t);
+                block.SetBoudingBox(this, boundingBox);
             }
         }
     }

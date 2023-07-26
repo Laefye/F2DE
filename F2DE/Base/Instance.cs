@@ -56,5 +56,19 @@ namespace F2DE.Base
             entities.Remove(entity);
             entity.Dispose();
         }
+
+        public List<T> GetComponents<T>() where T : EntityComponent
+        {
+            var components = new List<T>();
+            foreach (var entity in entities)
+            {
+                var component = entity.GetComponent<T>();
+                if (component != null)
+                {
+                    components.Add(component);
+                }
+            }
+            return components;
+        }
     }
 }

@@ -12,16 +12,33 @@ namespace F2DE.Minecraft2D
 {
     internal class Player : EntityComponent, ITickable
     {
-        private Locator transform;
+        private Locator locator;
+        private BoundingBox boundingBox;
 
         public Player(Entity entity) : base(entity)
         {
-            transform = entity.GetComponent<Locator>()!;
+            locator = entity.GetComponent<Locator>()!;
+            boundingBox = entity.GetComponent<BoundingBox>()!;
+        }
+
+        private bool CheckBlocks()
+        {
+            var blocks = entity.instance.GetComponents<BlockState>().FindAll((m) => Vector2.Distance(m.entity.GetComponent<Locator>()!.Position, locator.Position) < 40);
+            foreach (var block in blocks)
+            {
+                var bbox = block.entity.GetComponent<BoundingBox>();
+                if (boundingBox.IsIntersect(locator.Position, bbox!))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public void Tick()
         {
-            transform.position += new Vector2(48, 0) * (1f / 60f) * entity.instance.game.input.Horisontal;
+            locator.position += new Vector2(entity.instance.game.input.Horisontal, entity.instance.game.input.Vertical) * (1f/60) * 48f;
+            Console.WriteLine(CheckBlocks());
         }
     }
 }

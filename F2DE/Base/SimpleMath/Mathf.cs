@@ -24,5 +24,10 @@ namespace F2DE.Base.SimpleMath
         {
             return (float)Math.Atan2(y, x);
         }
+
+        public static float Sqrt(float x)
+        {
+            return (float)Math.Sqrt(x);
+        }
     }
 }

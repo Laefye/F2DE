@@ -12,7 +12,6 @@ namespace F2DE.Base
     {
         public Instance instance;
         private List<EntityComponent> components = new List<EntityComponent>();
-        public bool enabled = true;
 
         public Entity(Instance instance)
         {
@@ -21,10 +20,6 @@ namespace F2DE.Base
 
         public void RenderTick(string layer)
         {
-            if (!enabled)
-            {
-                return;
-            }
             foreach (var component in components)
             {
                 if (component.GetType().IsAssignableTo(typeof(IRenderTickable)))
@@ -47,10 +42,6 @@ namespace F2DE.Base
 
         public void Tick()
         {
-            if (!enabled)
-            {
-                return;
-            }
             Tick(typeof(ITickable), "Tick");
         }
 

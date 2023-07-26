@@ -10,11 +10,20 @@ namespace F2DE.Base
     {
         private bool left;
         private bool right;
+        private bool up;
+        private bool down;
         public float Horisontal
         {
             get
             {
                 return (left ? -1f : 0f) + (right ? 1f : 0f);
+            }
+        }
+        public float Vertical
+        {
+            get
+            {
+                return (up ? -1f : 0f) + (down ? 1f : 0f);
             }
         }
 
@@ -34,6 +43,14 @@ namespace F2DE.Base
             {
                 right = false;
             }
+            if (e.Code == SFML.Window.Keyboard.Key.Up)
+            {
+                up = false;
+            }
+            if (e.Code == SFML.Window.Keyboard.Key.Down)
+            {
+                down = false;
+            }
         }
 
         private void Window_KeyPressed(object? sender, SFML.Window.KeyEventArgs e)
@@ -45,6 +62,14 @@ namespace F2DE.Base
             if (e.Code == SFML.Window.Keyboard.Key.Right)
             {
                 right = true;
+            }
+            if (e.Code == SFML.Window.Keyboard.Key.Up)
+            {
+                up = true;
+            }
+            if (e.Code == SFML.Window.Keyboard.Key.Down)
+            {
+                down = true;
             }
         }
     }

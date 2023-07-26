@@ -46,7 +46,7 @@ namespace F2DE.Minecraft2D
             {
                 var locator = e.GetComponent<Locator>()!;
                 locator.parent = entity.GetComponent<Locator>();
-                locator.position = new Base.SimpleMath.Vector2(blockPos.x * 16, blockPos.y * 16);
+                locator.position = new Vector2(blockPos.x * 16, blockPos.y * 16);
             })).GetComponent<BlockState>()!;
             blockStates[GetIndex(blockPos)] = state;
             return state;
@@ -54,6 +54,7 @@ namespace F2DE.Minecraft2D
 
         public void Post()
         {
+            
             var blocks = entity.instance.game.registry.GetValue<BlocksRegistry>()!;
             var air = blocks.Get("air")!;
             var grass = blocks.Get("grass")!;

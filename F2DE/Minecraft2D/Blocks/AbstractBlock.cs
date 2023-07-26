@@ -22,10 +22,16 @@ namespace F2DE.Minecraft2D.Blocks
             this.game = game;
         }
 
+        public virtual void SetBoudingBox(BlockState blockState, BoundingBox boundingBox)
+        {
+            boundingBox.size = new Vector2(16, 16);
+        }
+
         public EntityBuilder GetBasePrefab()
         {
             return new EntityBuilder()
                 .Add<Locator>()
+                .Add<BoundingBox>()
                 .Add<SpriteRenderer>()
                 .Add<BlockState>()
                 .Post((p) => {

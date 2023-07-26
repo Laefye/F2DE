@@ -1,4 +1,5 @@
 ﻿using F2DE.Base;
+using F2DE.Base.Components;
 using F2DE.Base.Registries;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,11 @@ namespace F2DE.Minecraft2D.Blocks
     {
         public Air(Game game) : base(game)
         {
+        }
+
+        public override void SetBoudingBox(BlockState blockState, BoundingBox boundingBox)
+        {
+            boundingBox.enabled = false;
         }
 
         public override TextureResource? GetTexture(BlockState blockState)
