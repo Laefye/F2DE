@@ -1,4 +1,6 @@
-﻿using System;
+﻿using F2DE.Base.Registries;
+using SFML.Window;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,78 +10,65 @@ namespace F2DE.Base
 {
     internal class Input
     {
-        private bool left;
-        private bool right;
-        private bool up;
-        private bool down;
-        public float Horisontal
-        {
-            get
-            {
-                return (left ? -1f : 0f) + (right ? 1f : 0f);
-            }
-        }
-        public float Vertical
-        {
-            get
-            {
-                return (up ? -1f : 0f) + (down ? 1f : 0f);
-            }
-        }
-        public bool Jump;
+        private Game game;
 
         public Input(Game game)
         {
+            this.game = game;
             game.window.KeyPressed += Window_KeyPressed;
             game.window.KeyReleased += Window_KeyReleased;
         }
 
+        public void Register(string name, Keyboard.Key min, Keyboard.Key max)
+        {
+            game.registry.Register(new InputAxis(name, min, max));
+        }
+
+        public void Register(string name, Keyboard.Key key)
+        {
+            game.registry.Register(new InputButton(key, name));
+        }
+
         private void Window_KeyReleased(object? sender, SFML.Window.KeyEventArgs e)
         {
-            if (e.Code == SFML.Window.Keyboard.Key.Left)
+            game.registry.GetValues<InputRegisterValue>().ForEach(value => value.Release(e.Code));
+        }
+
+        private InputRegisterValue? GetInputRegister(string name)
+        {
+            foreach (var register in game.registry.GetValues<InputRegisterValue>())
             {
-                left = false;
+                if (register.name == name)
+                {
+                    return register;
+                }
             }
-            if (e.Code == SFML.Window.Keyboard.Key.Right)
+            return null;
+        }
+
+        public float GetAxis(string name)
+        {
+            var register = GetInputRegister(name);
+            if (register != null && register.GetType().IsAssignableTo(typeof(InputAxis)))
             {
-                right = false;
+                return ((InputAxis)register).Value;
             }
-            if (e.Code == SFML.Window.Keyboard.Key.Up)
+            return 0;
+        }
+
+        public bool GetButton(string name)
+        {
+            var register = GetInputRegister(name);
+            if (register != null && register.GetType().IsAssignableTo(typeof(InputButton)))
             {
-                up = false;
+                return ((InputButton)register).value;
             }
-            if (e.Code == SFML.Window.Keyboard.Key.Down)
-            {
-                down = false;
-            }
-            if (e.Code == SFML.Window.Keyboard.Key.Z)
-            {
-                Jump = false;
-            }
+            return false;
         }
 
         private void Window_KeyPressed(object? sender, SFML.Window.KeyEventArgs e)
         {
-            if (e.Code == SFML.Window.Keyboard.Key.Left)
-            {
-                left = true;
-            }
-            if (e.Code == SFML.Window.Keyboard.Key.Right)
-            {
-                right = true;
-            }
-            if (e.Code == SFML.Window.Keyboard.Key.Up)
-            {
-                up = true;
-            }
-            if (e.Code == SFML.Window.Keyboard.Key.Down)
-            {
-                down = true;
-            }
-            if (e.Code == SFML.Window.Keyboard.Key.Z)
-            {
-                Jump = true;
-            }
+            game.registry.GetValues<InputRegisterValue>().ForEach(value => value.Press(e.Code));
         }
     }
 }

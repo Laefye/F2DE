@@ -55,12 +55,12 @@ namespace F2DE.Minecraft2D
                 onGround = true;
                 gravity = Vector2.zero;
             }
-            var velocity = new Vector2(entity.instance.game.input.Horisontal, 0) * (1f / 60) * 48f;
+            var velocity = new Vector2(entity.instance.game.input.GetAxis("horisontal"), 0) * (1f / 60) * 48f;
             if (!CheckFree(velocity))
             {
                 locator.position += velocity;
             }
-            if (onGround && entity.instance.game.input.Jump)
+            if (onGround && entity.instance.game.input.GetButton("jump"))
             {
                 gravity += Vector2.up * 1.7f;
             }

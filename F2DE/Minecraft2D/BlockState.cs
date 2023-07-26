@@ -16,6 +16,7 @@ namespace F2DE.Minecraft2D
         private SpriteRenderer renderer;
         private BoundingBox boundingBox;
         public BlockPos blockPos;
+        public int light = 16;
 
         public BlockState(Entity entity) : base(entity)
         {

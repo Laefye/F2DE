@@ -23,6 +23,9 @@ namespace F2DE
             var blocks = new BlocksRegistry(game.registry);
             game.registry.Register(blocks);
             RegisterBlocks(game, blocks);
+            game.input.Register("horisontal", SFML.Window.Keyboard.Key.Left, SFML.Window.Keyboard.Key.Right);
+            game.input.Register("jump", SFML.Window.Keyboard.Key.Z);
+            game.input.Register("break", SFML.Window.Keyboard.Key.X);
             game.instance = new GameInstance(game);
             game.Run();
         }
