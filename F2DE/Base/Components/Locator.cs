@@ -12,22 +12,27 @@ namespace F2DE.Base.Components
     {
         public Vector2 position = Vector2.zero;
         public Rotation rotation = Rotation.identity;
-        public MatrixLike matrix;
         public Locator? parent;
+
+        // Relative to World
+        public MagicMatrixLike Matrix
+        {
+            get
+            {
+                if (parent != null)
+                {
+                    return new MagicMatrixLike(parent.Position, parent.Rotation);
+                }
+                return new MagicMatrixLike();
+            }
+        }
 
         // World Position
         public Vector2 Position
         {
             get
             {
-                var position = this.position;
-                var parent = this.parent;
-                while (parent != null)
-                {
-                    position = parent.matrix.ToUp(position);
-                    parent = parent.parent;
-                }
-                return position;
+                return position * Matrix;
             }
         }
 
@@ -36,20 +41,12 @@ namespace F2DE.Base.Components
         {
             get
             {
-                var rotation = this.rotation;
-                var parent = this.parent;
-                while (parent != null)
-                {
-                    rotation = rotation * parent.rotation;
-                    parent = parent.parent;
-                }
-                return rotation;
+                return rotation * Matrix;
             }
         }
 
         public Locator(Entity entity) : base(entity)
         {
-            matrix = new MatrixLike(this);
         }
     }
 }

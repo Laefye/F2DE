@@ -16,6 +16,9 @@ namespace F2DE.Minecraft2D
     {
         public GameInstance(Game game) : base(game)
         {
+            var world = Add(new EntityBuilder()
+                .Add<Locator>()
+                .Add<World>());
             var player = Add(new EntityBuilder()
                 .Add<Locator>()
                 .Add<SpriteRenderer>()
@@ -26,9 +29,13 @@ namespace F2DE.Minecraft2D
                     s.layer = "general";
                     s.SetTexture(game.registry.GetResource<TextureResource>("texture/player")!);
                     c.GetComponent<BoundingBox>()!.size = new Vector2(8, 32);
+                    c.GetComponent<Locator>()!.parent = world.GetComponent<Locator>();
                 })
             ); ;
-            var chunk = Add(new ChunkBuilder().CreateBuilder());
+            var chunk = Add(new ChunkBuilder().CreateBuilder().Post((e) =>
+            {
+                e.GetComponent<Locator>()!.parent = world.GetComponent<Locator>();
+            }));
         }
     }
 }

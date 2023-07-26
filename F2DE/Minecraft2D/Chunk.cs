@@ -54,27 +54,30 @@ namespace F2DE.Minecraft2D
 
         public void Post()
         {
-            
+            var rand = new Random();
             var blocks = entity.instance.game.registry.GetValue<BlocksRegistry>()!;
             var air = blocks.Get("air")!;
             var grass = blocks.Get("grass")!;
             var stone = blocks.Get("stone")!;
-            for (int i = 0; i < blockStates.Length; i++)
+            for (int x = 0; x < 16; x++)
             {
-                var blockpos = GetBlockPos(i);
-                if (blockpos.y == 7)
+                int offset = rand.Next(2);
+                for (int y = 0;  y < 128; y++)
                 {
-                    MakeBlockState(blockpos, grass.GetBasePrefab());
+                    var blockpos = new BlockPos(x, y);
+                    if (blockpos.y == 7 + offset)
+                    {
+                        MakeBlockState(blockpos, grass.GetBasePrefab());
+                    }
+                    if (blockpos.y < 7 + offset)
+                    {
+                        MakeBlockState(blockpos, air.GetBasePrefab());
+                    }
+                    else if (blockpos.y > 7 + offset)
+                    {
+                        MakeBlockState(blockpos, stone.GetBasePrefab());
+                    }
                 }
-                if (blockpos.y < 7)
-                {
-                    MakeBlockState(blockpos, air.GetBasePrefab());
-                }
-                else if (blockpos.y > 7) 
-                {
-                    MakeBlockState(blockpos, stone.GetBasePrefab());
-                }
-
             }
         }
     }

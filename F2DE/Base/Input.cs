@@ -26,6 +26,7 @@ namespace F2DE.Base
                 return (up ? -1f : 0f) + (down ? 1f : 0f);
             }
         }
+        public bool Jump;
 
         public Input(Game game)
         {
@@ -51,6 +52,10 @@ namespace F2DE.Base
             {
                 down = false;
             }
+            if (e.Code == SFML.Window.Keyboard.Key.Z)
+            {
+                Jump = false;
+            }
         }
 
         private void Window_KeyPressed(object? sender, SFML.Window.KeyEventArgs e)
@@ -70,6 +75,10 @@ namespace F2DE.Base
             if (e.Code == SFML.Window.Keyboard.Key.Down)
             {
                 down = true;
+            }
+            if (e.Code == SFML.Window.Keyboard.Key.Z)
+            {
+                Jump = true;
             }
         }
     }
