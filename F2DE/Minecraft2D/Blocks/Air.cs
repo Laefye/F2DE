@@ -14,12 +14,5 @@ namespace F2DE.Minecraft2D.Blocks
         public Air(Game game) : base(game)
         {
         }
-
-        public override void Update(BlockState blockState, BlockPos blockPos)
-        {
-            base.Update(blockState, blockPos);
-            blockState.entity.GetComponent<SpriteRenderer>()!.SetTexture(null);
-            blockState.entity.GetComponent<BoundingBox>()!.enabled = false;
-        }
     }
 }

@@ -15,11 +15,9 @@ namespace F2DE.Minecraft2D.Blocks
         {
         }
 
-        public override void Update(BlockState blockState, BlockPos blockPos)
+        public override TextureResource? GetTexture(BlockState blockState, BlockPos blockPos)
         {
-            base.Update(blockState, blockPos);
-            var texture = game.registry.GetResource<TextureResource>("texture/block/" + game.registry.GetValue<BlocksRegistry>()!.Get(blockState.block!));
-            blockState.entity.GetComponent<SpriteRenderer>()!.SetTexture(texture);
+            return game.registry.GetResource<TextureResource>("texture/block/" + game.registry.GetValue<BlocksRegistry>()!.Get(blockState.block!));
         }
     }
 }

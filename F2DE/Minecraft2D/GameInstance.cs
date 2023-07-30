@@ -32,10 +32,6 @@ namespace F2DE.Minecraft2D
                     c.GetComponent<Locator>()!.parent = world.GetComponent<Locator>();
                 })
             ); ;
-            var chunk = Add(new ChunkBuilder().CreateBuilder().Post((e) =>
-            {
-                e.GetComponent<Locator>()!.parent = world.GetComponent<Locator>();
-            }));
         }
     }
 }

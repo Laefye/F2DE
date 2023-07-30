@@ -27,16 +27,6 @@ namespace F2DE.Minecraft2D
 
         private bool CheckFree(Vector2 delta)
         {
-            var position = (locator.position + delta) * locator.Matrix;
-            var blocks = entity.instance.GetComponents<BlockState>().FindAll((m) => Vector2.Distance(m.entity.GetComponent<Locator>()!.Position, locator.Position) < 40);
-            foreach (var block in blocks)
-            {
-                var bbox = block.entity.GetComponent<BoundingBox>();
-                if (boundingBox.IsIntersect(position, bbox!))
-                {
-                    return true;
-                }
-            }
             return false;
         }
 
@@ -68,21 +58,7 @@ namespace F2DE.Minecraft2D
 
             if (entity.instance.game.input.GetButton("break"))
             {
-                var blocks = new List<BlockState>(entity.instance.GetComponents<BlockState>());
-                BlockState? block = null;
-                float distance = 100000;
-                foreach (var b in blocks)
-                {
-                    if (Vector2.Distance(b.entity.GetComponent<Locator>()!.Position, locator.Position) < distance)
-                    {
-                        distance = Vector2.Distance(b.entity.GetComponent<Locator>()!.Position, locator.Position);
-                        block = b;
-                    }
-                }
-                if (block != null)
-                {
-                    block.Break();
-                }
+                
             }
             if (locator.position.y > 20 * 16f)
             {

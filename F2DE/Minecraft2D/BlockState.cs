@@ -1,6 +1,7 @@
 ﻿using F2DE.Base;
 using F2DE.Base.Components;
 using F2DE.Base.Interfaces;
+using F2DE.Base.Registries;
 using F2DE.Minecraft2D.Blocks;
 using System;
 using System.Collections.Generic;
@@ -10,31 +11,13 @@ using System.Threading.Tasks;
 
 namespace F2DE.Minecraft2D
 {
-    internal class BlockState : EntityComponent
+    internal class BlockState
     {
-        public AbstractBlock? block;
-        private SpriteRenderer renderer;
-        private BoundingBox boundingBox;
-        public BlockPos blockPos;
-        public int light = 16;
+        public AbstractBlock block;
 
-        public BlockState(Entity entity) : base(entity)
+        public BlockState(AbstractBlock block)
         {
-            renderer = entity.GetComponent<SpriteRenderer>()!;
-            boundingBox = entity.GetComponent<BoundingBox>()!;
-        }
-
-        public void Update()
-        {
-            if (block != null)
-            {
-                block.Update(this, blockPos);
-            }
-        }
-
-        public void Break()
-        {
-            entity.instance.Destroy(entity);
+            this.block = block;
         }
     }
 }

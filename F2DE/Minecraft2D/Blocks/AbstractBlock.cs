@@ -20,24 +20,19 @@ namespace F2DE.Minecraft2D.Blocks
             this.game = game;
         }
 
-        public EntityBuilder GetBasePrefab()
+        public BlockState GetDefaultBlockState()
         {
-            return new EntityBuilder()
-                .Add<Locator>()
-                .Add<BoundingBox>()
-                .Add<SpriteRenderer>()
-                .Add<BlockState>()
-                .Post((p) => {
-                    p.GetComponent<SpriteRenderer>()!.layer = "background";
-                    var state = p.GetComponent<BlockState>()!;
-                    state.block = this;
-                    state.Update();
-                });
+            return new BlockState(this);
         }
 
-        public virtual void Update(BlockState blockState, BlockPos blockPos)
+        public virtual void Update(BlockState state, BlockPos pos)
         {
-            blockState.entity.GetComponent<BoundingBox>()!.size = new Vector2(16, 16);
+
+        }
+
+        public virtual TextureResource? GetTexture(BlockState state, BlockPos pos)
+        {
+            return null;
         }
     }
 }
